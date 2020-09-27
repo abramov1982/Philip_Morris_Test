@@ -56,41 +56,37 @@ class Game():
         else:
             return random.randint(1, self.__answer_range + 1)
     
-    def __num_player(self, player_number, current_number):
-        
+    def __real_player(self, player, current_number):
         if current_number not in range(1, self.__answer_range +1):
             last_number = self.__answer_range
         else:
             last_number = current_number
+            
+        player_input = input(f'{player}, введите ваше число (от 1 до {last_number}) - ')
         
-# Переписать этот кусок через try except
-# --------------------------------------------------        
-        player_input = input(f'{player_number}, введите ваше число (от 1 до {last_number}) - ')
-        
-        if type(int(player_input)) is int and int(player_input) in range(1, last_number + 1):
+        if player_input.isdigit() and int(player_input) in range(1, last_number + 1):
             result = current_number - int(player_input)
-            return str(result)
         else:
-            print('Введено некорректное число')
-            print(last_number)
-            self.__num_player(player_number, current_number)
-        return f'pizda'
+            print('Некорректный ввод, попробуйте ещё раз')
+            return self.__real_player(player, current_number)
+        if result == 0:
+            print(f'{player} - вы победили')
+        return result
 # --------------------------------------------------    
     def start_game(self):
         current_number = self.__number
         
         print(f'Загадано число {current_number}')
         
-        while current_number is not None:
-            current_number = int(self.__num_player(self.player_one, current_number))
-            print(current_number)
-            current_number = int(self.__num_player(self.player_two, current_number))
-            print(current_number)
-        return True
+        while current_number != 0:
+            current_number = self.__real_player(self.player_one, current_number)
+            if self.__answer_between:
+                print(f'Текущий остаток - {current_number}')
+            current_number = self.__real_player(self.player_two, current_number)
+            if self.__answer_between:
+                print(f'Текущий остаток - {current_number}')
+        return 'Игра окончена'
             
 a = Game(player_one, player_two, difficult)
 
-# print(a.get_difficult())
-# print(a.answer_range)
-# print(a.answer_between)
 print(a.start_game())
