@@ -43,7 +43,5 @@ def search_apple_seller(graph, start_point, target):
                     queue.clear()
                     print(f'{i} is our {target}')
                     print(f'{counter} step to {i}')
-            
 
-if __name__ == '__main__':
-        search_apple_seller(graph, 'you', 'apple seller')  
+search_apple_seller(graph, 'you', 'apple seller')
