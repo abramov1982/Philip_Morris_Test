@@ -1,0 +1,4 @@
+$source = "C:\!Distr\office.exe"
+$destant = "\\server\c$\!Distr\office.exe"
+
+Copy-Item $source -Destination $destant -force
